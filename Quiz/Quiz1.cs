@@ -42,6 +42,7 @@ namespace Quiz
                     }
                     i++;
                 }
+
                 else
                 {
                     i = 0;
