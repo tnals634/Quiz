@@ -81,6 +81,31 @@ namespace Quiz
             Console.WriteLine("MAX Number : {0}", max_number);
         }
 
+        public static void Quiz_4()
+        {
+            int count = 0;
+            int number = 1;
+            while (count < 20)
+            {
+                if (count == 19)
+                {
+                    break;
+                }
+                else
+                {
+                    count = 0;
+                    number++;
+                    for (int i = 1; i <= 20; i++)
+                    {
+                        if (number % i == 0)
+                        {
+                            count++;
+                        }
+                    }
+                }
+            }
+            Console.WriteLine("{0}", number);
+        }
 
     }
 }
