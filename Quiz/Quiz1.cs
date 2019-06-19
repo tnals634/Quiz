@@ -83,11 +83,12 @@ namespace Quiz
 
         public static void Quiz_4()
         {
+            //122 522 40/ 232 792 560
             int count = 0;
             int number = 1;
-            while (count < 20)
+            while (count <= 20)
             {
-                if (count == 19)
+                if (count == 20)
                 {
                     break;
                 }
@@ -105,6 +106,32 @@ namespace Quiz
                 }
             }
             Console.WriteLine("{0}", number);
+        }
+
+        public static void Quiz_5()
+        {
+            int[] minority = new int[10001];
+
+            int count = 0, num = 1, minorityNumber = 0;
+            while(minorityNumber<10001)
+            {
+                count = 0;
+                for (int i = 1;i<=num;i++)
+                {
+                    if(num%i==0)
+                    {
+                        count++;
+                    }
+                }
+                if(count==2)
+                {
+                    minority[minorityNumber] = num;
+                    minorityNumber++;
+                }
+                num++;
+            }
+            Console.WriteLine("{0}번째 소수 : {1},", minorityNumber, minority[minorityNumber - 1]);
+
         }
 
     }
