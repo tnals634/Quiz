@@ -64,5 +64,23 @@ namespace Quiz
             
         }
 
+        public static void Quiz_3()
+        {
+            long number = 600851475143;
+            long max_number = 0;
+            int i = 0;
+            for (i = 2; i <= number; i++)
+            {
+                if (number % i == 0)
+                {
+                    number = number / i;
+                    Console.WriteLine(" {0}, ", i);
+                    max_number = i;
+                }
+            }
+            Console.WriteLine("MAX Number : {0}", max_number);
+        }
+
+
     }
 }
