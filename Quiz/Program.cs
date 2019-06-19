@@ -10,7 +10,8 @@ namespace Quiz
     {
         static void Main(string[] args)
         {
-            Quizes.Quiz_1();
+            //Quizes.Quiz_1();
+            Quizes.Quiz_2();
         }
     }
 }
