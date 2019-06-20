@@ -156,9 +156,23 @@ namespace Quiz
                    { 20,73,35,29,78,31,90,01,74,31,49,71,48,86,81,16,23,57,05,54 },
                    { 01,70,54,71,83,51,54,69,16,92,33,48,61,43,52,01,89,19,67,48 }
             };
-            int horizonMax = 0;
-            horizonMax = Horizon(map);
-            
+            int[] max = new int[4];
+            int lastMax = 0;
+            max[0] = Horizon(map);
+            max[1] = VertiCality(map);
+            max[2] = Left_Up(map);
+            max[3] = Right_Up(map);
+
+            lastMax = max[0];
+            for (int i = 0; i < 4; i++)
+            {
+                if(lastMax <= max[i])
+                {
+                    lastMax = max[i];
+                }
+            }
+            Console.WriteLine("가장 큰 수 = {0}", lastMax);
+
         }
 
         public static int Horizon(int[,] map)
@@ -168,7 +182,7 @@ namespace Quiz
             int num = 0, max = 0;
             for(int i=0;i<20;i++)
             {
-                for(int j=0;j<16;j++)
+                for(int j=0;j<17;j++)
                 {
                     for(int z=j;z<j+4;z++)
                     {
@@ -182,35 +196,102 @@ namespace Quiz
             max = mulNumber[0];
             for(int i=0;i<num;i++)
             {
-                Console.Write("{0}번째 4개의수평을 곱한 값 {1}\n ", i, mulNumber[i]);
                 if (max <= mulNumber[i])
                 {
                     max = mulNumber[i];
                 }
             }
-            Console.WriteLine("그중에 가장 큰 수 : {0}", max);
             return max;
         }
 
-        public static void VertiCality()
+        public static int VertiCality(int[,] map)
         {
+            int number = 1, num = 0, max = 0;
+            int[] mulNumber = new int[1000];
             for(int j=0;j<20;j++)
             {
-                for(int i=0;i<20;i++)
+                for(int i=0;i<17;i++)
                 {
-
+                    for(int z=i;z<i+4;z++)
+                    {
+                         number *= map[z, j];
+                    }
+                    mulNumber[num] = number;
+                    number = 1;
+                    num++;
                 }
             }
+            max = mulNumber[0];
+            for(int i=0;i<num;i++)
+            {
+                if(max <= mulNumber[i])
+                {
+                    max = mulNumber[i];
+                }
+            }
+            return max;
         }
 
-        public static void Left_Up()
+        public static int Left_Up(int[,] map)
         {
+            int i, max = 0, num = 0, number = 1;
+            int[] mulNumber = new int[1000];
+            for(i = 0;i<17;i++)
+            {
+                for(int j=0;j<17;j++)
+                {
+                    for(int z = i; z < i + 4; z++)
+                    {
+                        number *= map[z, (j + max)];
+                        max++;
+                    }
+                    mulNumber[num] = number;
+                    number = 1;
+                    num++;
+                    max = 0;
+                }
+            }
 
+            max = mulNumber[0];
+            for(i = 0; i < num; i++)
+            {
+                if (max <=mulNumber[i])
+                {
+                    max = mulNumber[i];
+                }
+            }
+            return max;
         }
 
-        public static void Right_Up()
+        public static int Right_Up(int[,] map)
         {
+            int i, max = 0, num = 0, number = 1;
+            int[] mulNumber = new int[1000];
+            for (i = 0; i < 17; i++)
+            {
+                for (int j = 19; j > 2; j--)
+                {
+                    for (int z = i; z < i + 4; z++)
+                    {
+                        number *= map[z, (j - max)];
+                        max++;
+                    }
+                    mulNumber[num] = number;
+                    number = 1;
+                    num++;
+                    max = 0;
+                }
+            }
 
+            max = mulNumber[0];
+            for (i = 0; i < num; i++)
+            {
+                if (max <= mulNumber[i])
+                {
+                    max = mulNumber[i];
+                }
+            }
+            return max;
         }
     }
 }
