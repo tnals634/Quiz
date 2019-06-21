@@ -293,5 +293,135 @@ namespace Quiz
             }
             return max;
         }
+
+        public static void Quiz_7()
+        {
+            string[] number_1 = {"one","two","three","four",
+                "five","six","seven","eight","nine" };
+            string[] number_2 = { "eleven", "twelve", "thirteen", "fourteen",
+                "fifteen", "sixteen", "seventeen","eighteen","nineteen"};
+            string[] number_10 = {"twenty", "thirty", "forty", "fifty",
+                "sixty", "seventy", "eighty", "ninety" };
+            int sum = 0, j = 0, number = 0, number10 = 0, n = 0;
+            int[] count = new int[1000];
+            for(int i=0;i<1000;i++)
+            {
+                count[i] = i + 1;
+            }
+            for (int i = 0; i < 1000; i++)
+            {
+                if (count[i] < 10)
+                {
+                    sum += number_1[i].Length;
+                    Console.WriteLine($"{number_1[i]}");
+                }
+
+                else if (count[i] == 10)
+                {
+                    sum += "ten".Length;
+                    Console.WriteLine("ten");
+                    j = i + 1;
+                }
+
+                else if (count[i] < 20)
+                {
+                    sum += number_2[i - j].Length;
+
+                    Console.WriteLine($"{number_2[i - j]}");
+                }
+                else if ((20 <= count[i]) && (count[i] < 100))
+                {
+                    if (count[i] % 10 == 0)
+                    {
+                        number10 = count[i] / 10;
+                        sum += number_10[number10-2].Length;
+                        Console.WriteLine($"{number_10[number10-2]}");
+                    }
+                    else
+                    {
+                        number = (count[i] % 10);
+                        sum += number_10[number10-2].Length;
+                        sum += number_1[number - 1].Length;
+                        Console.Write($"{number_10[number10-2]}");
+                        Console.WriteLine(" {0}", number_1[number - 1]);
+                    }
+                    Console.WriteLine();                    
+                }
+
+                else if (count[i] == 100)
+                {
+                    sum += "onehundred".Length;
+                    Console.WriteLine("one hundred");
+                }
+
+                else if ((100 < count[i]) && (count[i] < 1000))
+                {
+                    if (count[i] % 100 == 0)
+                    {
+                        number = count[i] / 100;
+                        sum += number_1[number - 1].Length;
+                        sum += "hundred".Length;
+                        Console.Write($"{number_1[number - 1]}");
+                        Console.WriteLine("hundred");
+                    }
+                    else
+                    {
+                        number = count[i] / 100;
+                        sum += number_1[number - 1].Length;
+                        sum += "hundred".Length;
+                        sum += "and".Length;
+                        Console.Write($"{number_1[number - 1]}");
+                        Console.Write(" hundred and ");
+                        n = count[i] - (number * 100);                        
+                        if (n < 10)
+                        {
+                            sum += number_1[n - 1].Length;
+                            Console.WriteLine($"{number_1[n - 1]}");
+                            
+                        }
+                        else if(n == 10)
+                        {
+                            sum += "ten".Length;
+                            Console.WriteLine("ten");
+                        }
+                        else
+                        {
+                            if (n % 10 == 0)
+                            {
+                                number10 = n / 10;
+                                sum += number_10[number10 - 2].Length;
+                                Console.WriteLine($"{number_10[number10 - 2]}");
+                            }
+                            else
+                            {
+                                number10 = n / 10;
+                                if (number10 == 1)
+                                {
+                                    number = n - (number10 * 10);
+                                    sum += number_2[number - 1].Length;
+                                    Console.WriteLine($"{number_2[number - 1]}");
+                                }
+                                else
+                                {
+                                    sum += number_10[number10 - 2].Length;
+                                    number = n - (number10 * 10);
+                                    sum += number_1[number - 1].Length;
+                                    Console.Write($"{number_10[number10 - 2]}");
+                                    Console.WriteLine($"{number_1[number - 1]}");
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+                else if (count[i] == 1000)
+                {
+                    sum += "onethousand".Length;
+                    Console.WriteLine("oneThousand");
+                }
+            }
+            Console.WriteLine($"{sum}");
+        }
     }
 }
