@@ -16,7 +16,8 @@ namespace Quiz
             //Quizes.Quiz_4();
             //Quizes.Quiz_5();
             //Quizes.Quiz_6();
-            Quizes.Quiz_7();
+            //Quizes.Quiz_7();
+            Quizes.Quiz_8();
         }
     }
 }

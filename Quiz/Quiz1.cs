@@ -8,7 +8,7 @@ namespace Quiz
 {
     public static partial class Quizes
     {
-        public static void Quiz_1()
+        public static void Quiz_1()// 1~1000사이의 3과5의 배수 합
         {
             int[] number = new int[1000];
             int j = 0, k = 0;
@@ -28,7 +28,7 @@ namespace Quiz
             Console.WriteLine(k);
         }
 
-        public static void Quiz_2()
+        public static void Quiz_2()// 400만을 넘지 않는 짝수 피보나치 수열의 합
         {
             int endNumber = 0, i = 1, maxnum = 4000000;
             while (i != 0)
@@ -64,7 +64,7 @@ namespace Quiz
             
         }
 
-        public static void Quiz_3()
+        public static void Quiz_3()// 600851475143의 최대 소인수 구하기
         {
             long number = 600851475143;
             long max_number = 0;
@@ -81,7 +81,7 @@ namespace Quiz
             Console.WriteLine("MAX Number : {0}", max_number);
         }
 
-        public static void Quiz_4()
+        public static void Quiz_4()// 1~20까지의 숫자로 모두 나눠지는 최소의 수
         {
             //122 522 40/ 232 792 560
             int count = 0;
@@ -108,7 +108,7 @@ namespace Quiz
             Console.WriteLine("{0}", number);
         }
 
-        public static void Quiz_5()
+        public static void Quiz_5()// 10001번째 소수 구하기
         {
             int[] minority = new int[10001];
 
@@ -133,7 +133,7 @@ namespace Quiz
             Console.WriteLine("{0}번째 소수 : {1},", minorityNumber, minority[minorityNumber - 1]);
         }
 
-        public static void Quiz_6()
+        public static void Quiz_6()//격자에서 4가지 수 곱한것 중에 가장 큰 수 
         {
             int[,] map = new int[20,20] { { 08,02,22,97,38,15,00,40,00,75,04,05,07,78,52,12,50,77,91,08 },
                    { 49,49,99,40,17,81,18,57,60,87,17,40,98,43,69,48,04,56,62,00 },
@@ -294,7 +294,7 @@ namespace Quiz
             return max;
         }
 
-        public static void Quiz_7()
+        public static void Quiz_7()// 1~1000까지의 영어 단어 수
         {
             string[] number_1 = {"one","two","three","four",
                 "five","six","seven","eight","nine" };
@@ -422,6 +422,221 @@ namespace Quiz
                 }
             }
             Console.WriteLine($"{sum}");
+        }
+
+        public static void Quiz_8()// 1901년 1월1일~2000년 12월31일에서 매월 1일이 일요일인 경우 총 몇번?
+        {
+            int[] Month_30 = {4,6,9,11 };
+            int[] Month_31 = {1,3,5,7,8,10,12 };
+            int[,] Days = new int[6, 7];
+            int MonthCheck_30 = 0,MonthCheck_31 = 0,m = 1, firstNumber = 1, lastNumber = 0;
+            int[] Years = new int[101];
+            int yearcheck = 0;
+            int sunday = 0;
+            for(int i=0;i<101;i++)
+            {
+                Years[i] = 1900 + i;
+            }
+
+
+            while (yearcheck<101)
+            {
+                Console.WriteLine($"-----{Years[yearcheck]}년도------");
+
+                while (m < 13)
+                {
+                    for (MonthCheck_30 = 0; MonthCheck_30 <=3; MonthCheck_30++)
+                    {
+                        if (m == Month_30[MonthCheck_30])
+                        {
+                            Console.WriteLine($"========={m}월=========");
+                            Console.WriteLine("일 월 화 수 목 금 토");
+                            MonthCheck_31 = 0;
+                            lastNumber = CalendarLastNumber(Days, Month_30, Month_31, MonthCheck_30, MonthCheck_31, m, firstNumber, Years, yearcheck);
+                            CalendarPrint(Days);
+                            if(0<yearcheck)
+                            {
+                                if(Days[0,0]==1)
+                                {
+                                    sunday++;
+                                }
+                            }
+                            firstNumber = lastNumber + 1;
+                            if (6 < firstNumber)
+                            {
+                                firstNumber = 0;
+                            }
+                            m++;
+                        }
+                    }
+                    for (MonthCheck_31 = 0; MonthCheck_31 <= 6; MonthCheck_31++)
+                    {
+                        if (m == Month_31[MonthCheck_31])
+                        {
+                            Console.WriteLine($"========={m}월=========");
+                            Console.WriteLine("일 월 화 수 목 금 토");
+                            MonthCheck_30 = 0;
+                            lastNumber = CalendarLastNumber(Days, Month_30, Month_31, MonthCheck_30, MonthCheck_31, m, firstNumber, Years, yearcheck);
+                            CalendarPrint(Days);
+                            if (0 < yearcheck)
+                            {
+                                if (Days[0, 0] == 1)
+                                {
+                                    sunday++;
+                                }
+                            }
+                            firstNumber = lastNumber + 1;
+                            if (6 < firstNumber)
+                            {
+                                firstNumber = 0;
+                            }
+                            m++;
+                        }
+                    }
+                    if (m == 2)
+                    {
+                        Console.WriteLine($"========={m}월=========");
+                        Console.WriteLine("일 월 화 수 목 금 토");
+                        MonthCheck_31 = MonthCheck_30 = 0;
+                        lastNumber = CalendarLastNumber(Days, Month_30, Month_31, MonthCheck_30, MonthCheck_31, m, firstNumber, Years, yearcheck);
+                        CalendarPrint(Days);
+                        if (0 < yearcheck)
+                        {
+                            if (Days[0, 0] == 1)
+                            {
+                                sunday++;
+                            }
+                        }
+                        firstNumber = lastNumber + 1;
+                        if (6 < firstNumber)
+                        {
+                            firstNumber = 0;
+                        }
+                        m++;
+                    }
+                }
+                m = 1;
+                yearcheck++;
+                Console.WriteLine();
+            }
+            Console.WriteLine("매월 1일 일요일은 총 {0}번이다",sunday);
+        }
+
+        public static int CalendarLastNumber(int[,] input, int[] month_30, int[] month_31, int monthCheck_30, int monthCheck_31, int monthNumber, int firstNumber,int[] year, int yearcheck)
+        {
+            int daysNumber = 0, last = 0;
+            int count = 0;
+            int[] leap_year = new int[100];
+            int leap = 0;
+            int c = 0;
+
+            for (int i = 1; i < 2001; i++)
+            {
+                if (i % 400 != 0)
+                {
+                    count++;
+                }
+                if (count == 100)
+                {
+                    leap_year[leap] = i;
+                    leap++;
+                    c = 0;
+                }
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    input[i, j] = 0;
+                }
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = firstNumber; j < 7; j++)
+                {
+                    if (monthNumber == month_30[monthCheck_30])
+                    {
+                        if (daysNumber < 30)
+                        {
+                            daysNumber++;
+                            input[i, j] = daysNumber;
+                            last = j;
+                        }
+                    }
+                    else if (monthNumber == month_31[monthCheck_31])
+                    {
+                        if (daysNumber < 31)
+                        {
+                            daysNumber++;
+                            input[i, j] = daysNumber;
+                            last = j;
+                        }
+                    }
+                    else if (monthNumber == 2)
+                    {
+                        if (leap_year[leap - 1] == year[yearcheck])
+                        {
+                            if (daysNumber < 28)
+                            {
+                                daysNumber++;
+                                input[i, j] = daysNumber;
+                                last = j;
+                            }
+                        }
+                        else if (year[yearcheck] % 4 == 0)
+                        {
+                            if(daysNumber<29)
+                            {
+                                daysNumber++;
+                                input[i, j] = daysNumber;
+                                last = j;
+                            }
+                        }
+                        else
+                        {
+                            if(daysNumber<28)
+                            {
+                                daysNumber++;
+                                input[i, j] = daysNumber;
+                                last = j;
+                            }
+                        }
+                    }
+
+                }
+                firstNumber = 0;
+            }
+            daysNumber = 0;
+
+            return last;
+        }
+
+        public static void CalendarPrint(int[,] input)
+        {
+            for(int i=0;i<6;i++)
+            {
+                for(int j=0;j<7;j++)
+                {
+                    if(input[i,j]!=0)
+                    {
+                        if(input[i,j]<10)
+                        {
+                            Console.Write($" {input[i,j]} ");
+                        }
+                        else
+                        {
+                            Console.Write($"{input[i,j]} ");
+                        }
+                    }
+                    else if (input[i, j] == 0)
+                    {
+                        Console.Write("   ");
+                    }
+                }
+                Console.WriteLine();
+            }
         }
     }
 }
