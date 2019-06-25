@@ -638,5 +638,47 @@ namespace Quiz
                 Console.WriteLine();
             }
         }
+
+        public static void Quiz_9()
+        {
+            double number = 1;
+            int[] count = new int[200];
+            int countCheck = 0;
+            for (int i = 1; i <= 100; i++)
+            {
+                number = number * i;
+                Console.WriteLine($"{i}");
+                Console.WriteLine($"{number}");
+            }
+            Console.WriteLine($"_{number}_");
+            factorial(number, count, countCheck);
+        }
+
+        public static void factorial(double num, int[] b, int i)
+        {
+            if(num>=10)
+            {
+                b[i] = (int)(num % 10);
+                Console.WriteLine($"***{b[i]}***");
+                num = num / 10;
+                Console.WriteLine($"---{num}---");
+                i++;
+                factorial(num, b,i);
+            }
+            else
+            {
+                b[i] = (int)(num % 10);
+                Console.WriteLine($"***{b[i]}***");
+                num = num / 10;
+                Console.WriteLine($"---{num}---");
+                i++;
+                Console.WriteLine();
+                for (int j = i-1; j >= 0; j--)
+                {
+                    Console.Write($"{b[j]}, ");
+                }
+            }
+
+        }
     }
 }
